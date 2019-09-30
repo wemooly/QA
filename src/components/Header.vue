@@ -5,6 +5,7 @@
         <router-link to="/" exact>问题总览</router-link>
         <router-link to="/addQuestion" exact>添加问题</router-link>
         <router-link to="/singleQusetion" exact>单独问题</router-link>
+        <router-link to="/myDashBoard" exact>dashboard</router-link>
       </li>
     </ul>
   </nav>

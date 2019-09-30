@@ -7,7 +7,7 @@ export default new Router({
   routes: [
     {
       path: "/",
-      redirect:'/echarts',
+      redirect:'/myDashBoard',
       component: () => import("../components/ShowQuestion.vue")
     },
     {
@@ -48,6 +48,21 @@ export default new Router({
     },{
       path:"/upload",
       component:()=>import("./../components/upload.vue")
+    },{
+      path:"/print",
+      component:()=>import("./../components/print.vue")
+    },
+    {
+      path:"/tuopuEchart",
+      component:()=>import("./../components/TuopuEchart.vue")
+    },
+    {
+      path:"/json",
+      component:()=>import("./../components/jsonEdit.vue")
+    },
+    {
+      path:"/myDashBoard",
+      component:()=>import("./../components/dashboard/index.vue")
     },
     {
       path:"*",

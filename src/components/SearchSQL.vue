@@ -9,7 +9,11 @@
       @select="handleSelect"
       :disabled="editFlag"
       @input.native="add"
+      
     >
+    <!-- @input.native="textInput"
+      @click.native="clickInput"
+      @keyup.native="keyupInput" -->
       <template slot-scope="{ item }">
         <div class="name">{{ item.value }}</div>
       </template>
@@ -97,18 +101,91 @@ export default {
       // this.$emit("父组件的方法名",this.state);   // 将值传递给父组件
     },
     // 处理光标和供搜索的值
-    onInput() {
-      var $input = document.querySelector(".inline-input .el-input__inner");
-      var cursurPosition = 0;
+    // onInput() {
+    //   var $input = document.querySelector(".inline-input .el-input__inner");
+    //   var cursurPosition = 0;
+    //   // 输入的文字的时候监听光标的位置
+    //   $input.oninput = e => {
+    //     this.newArr = e.target.value.trim().split(/[\s+,(,),\-,\/,\*]/g);
+    //     this.newArr = this.cleanArray(this.newArr);
+
+    //     // 如果我将 newArr 清空了  也要统一 oldArr
+    //     if (this.oldArr.length >= this.newArr.length) {
+    //       this.oldArr = this.newArr;
+    //       this.cursurPositionIndex = cursurPosition - 1; // 删除的时候重置光标的位置
+    //     }
+    //     //找出不同的哪一个位置的索引
+    //     for (let i = 0, len = this.newArr.length - 1; i <= len; i++) {
+    //       if (this.oldArr[i] != this.newArr[i]) {
+    //         this.index = i;
+    //         break;
+    //       } else {
+    //         this.index = i + 1;
+    //       }
+    //     }
+    //     // 光标位置的函数
+    //     if ($input.selectionStart) {
+    //       //非IE
+    //       cursurPosition = $input.selectionStart;
+    //     } else {
+    //       //IE
+    //       try {
+    //         var range = document.selection.createRange();
+    //         range.moveStart("character", -$input.value.length);
+    //         cursurPosition = range.text.length;
+    //       } catch (e) {
+    //         cursurPosition = 0;
+    //       }
+    //     }
+    //     if (this.signArr.includes(e.data)) {
+    //       this.oldArr = this.newArr;
+    //       this.sign = e.data;
+    //       this.cursurPositionIndex = cursurPosition;
+    //     }
+    //   };
+    //   // 点击的时候也跟新光标的位置
+    //   $input.onclick = e => {
+    //     if ($input.selectionStart) {
+    //       //非IE
+    //       cursurPosition = $input.selectionStart;
+    //     } else {
+    //       //IE
+    //       try {
+    //         var range = document.selection.createRange();
+    //         range.moveStart("character", -$input.value.length);
+    //         cursurPosition = range.text.length;
+    //       } catch (e) {
+    //         cursurPosition = 0;
+    //       }
+    //     }
+    //     this.cursurPositionIndex = cursurPosition;
+    //   };
+    //   $input.onkeyup = e => {
+    //     e = e || window.event;
+    //     if (e.keyCode == 37) {
+    //       this.cursurPositionIndex--;
+    //       if (this.cursurPositionIndex <= 0) {
+    //         this.cursurPositionIndex = 0;
+    //       }
+    //     } else if (e.keyCode == 39) {
+    //       this.cursurPositionIndex++;
+    //       if (this.cursurPositionIndex >= this.inputVal.length) {
+    //         this.cursurPositionIndex = this.inputVal.length;
+    //       }
+    //     }
+    //   };
+    // },
+    textInput(e){
       // 输入的文字的时候监听光标的位置
-      $input.oninput = e => {
+        var $input = document.querySelector(".inline-input .el-input__inner");
+
         this.newArr = e.target.value.trim().split(/[\s+,(,),\-,\/,\*]/g);
         this.newArr = this.cleanArray(this.newArr);
-
+        console.log(3213);
         // 如果我将 newArr 清空了  也要统一 oldArr
         if (this.oldArr.length >= this.newArr.length) {
           this.oldArr = this.newArr;
-          this.cursurPositionIndex = cursurPosition - 1; // 删除的时候重置光标的位置
+          this.cursurPositionIndex = this.cursurPosition - 1; // 删除的时候重置光标的位置
         }
         //找出不同的哪一个位置的索引
         for (let i = 0, len = this.newArr.length - 1; i <= len; i++) {
@@ -122,41 +199,45 @@ export default {
         // 光标位置的函数
         if ($input.selectionStart) {
           //非IE
-          cursurPosition = $input.selectionStart;
+          this.cursurPosition = $input.selectionStart;
         } else {
           //IE
           try {
             var range = document.selection.createRange();
             range.moveStart("character", -$input.value.length);
-            cursurPosition = range.text.length;
+            this.cursurPosition = range.text.length;
           } catch (e) {
-            cursurPosition = 0;
+            this.cursurPosition = 0;
           }
         }
+        console.log(this.cursurPosition,"this.cursurPosition");
+        
         if (this.signArr.includes(e.data)) {
           this.oldArr = this.newArr;
           this.sign = e.data;
-          this.cursurPositionIndex = cursurPosition;
+          this.cursurPositionIndex = this.cursurPosition;
         }
-      };
-      // 点击的时候也跟新光标的位置
-      $input.onclick = e => {
+    },
+    clickInput(e){
+       var $input = document.querySelector(".inline-input .el-input__inner");
+
+        //点击的时候也跟新光标的位置
         if ($input.selectionStart) {
           //非IE
-          cursurPosition = $input.selectionStart;
+          this.cursurPosition = $input.selectionStart;
         } else {
           //IE
           try {
             var range = document.selection.createRange();
             range.moveStart("character", -$input.value.length);
-            cursurPosition = range.text.length;
+            this.cursurPosition = range.text.length;
           } catch (e) {
-            cursurPosition = 0;
+            this.cursurPosition = 0;
           }
         }
-        this.cursurPositionIndex = cursurPosition;
-      };
-      $input.onkeyup = e => {
+        this.cursurPositionIndex = this.cursurPosition;
+    },
+    keyupInput(e){
         e = e || window.event;
         if (e.keyCode == 37) {
           this.cursurPositionIndex--;
@@ -169,7 +250,6 @@ export default {
             this.cursurPositionIndex = this.inputVal.length;
           }
         }
-      };
     },
     // 数组去空
     cleanArray(actual) {
@@ -196,7 +276,7 @@ export default {
 
     // this.restaurants = (this.restaurants.push(this.acceptRestaurants)).flat();
     // 每次 按下空格键/特殊字符就统一 oldArr 和 newArr/
-    this.onInput();
+    // this.onInput();
   }
 };
 </script>

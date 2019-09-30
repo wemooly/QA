@@ -29,7 +29,7 @@
     </el-option>
    </el-select>
 
-   <a href="./../../static/FiddlerSetup.exe" download="FiddlerSetup.exe">下载fiddler</a>
+   <a href="./../assets/logo.png" download="./../assets/logo.png">下载fiddler</a>
    <span id="press">我的点击使劲</span>
    <htmlEdit v-model="aa"></htmlEdit>
   </div>

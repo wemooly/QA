@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <QHeader />
-    <Search :acceptRestaurants="total" :showDefaultValue="value"></Search>
+    <!-- <Search :acceptRestaurants="total" :showDefaultValue="value"></Search> -->
     <router-view />
   </div>
 </template>

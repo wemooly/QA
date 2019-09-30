@@ -115,7 +115,16 @@ const webpackConfig = merge(baseWebpackConfig, {
         to: config.build.assetsSubDirectory,
         ignore: ['.*']
       }
-    ])
+    ]),
+    // 配置打包环境自动忽略 debugger 和log 打印
+    new webpack.optimize.UglifyJsPlugin({ //自动删除console.log
+      compress: {
+        warnings: false,
+        drop_debugger: true,
+        drop_console: true
+      },
+      sourceMap: true
+    }),
   ]
 })
 

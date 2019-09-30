@@ -1,12 +1,12 @@
 <template>
   <div class="in-coder-panel">
     <textarea ref="textarea"></textarea>
-    <!-- <el-select class="code-mode-select" v-model="mode"
+    <el-select class="code-mode-select" v-model="mode"
                @change="changeMode">
       <el-option v-for="mode in modes"
                  :key="mode.value" :label="mode.label" :value="mode.value">
       </el-option>
-    </el-select> -->
+    </el-select>
   </div>
 </template>
 
@@ -71,7 +71,7 @@
           lineNumbers: true,
           line: true,
           extraKeys: { "Tab": "autocomplete" },
-          lineWrapping: true, // 设置代码是否折叠
+          lineWrapping: false, // 设置代码是否折叠
           matchBrackets: true,	//括号匹配
         },
         // 支持切换的语法高亮类型，对应 JS 已经提前引入

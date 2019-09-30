@@ -197,7 +197,7 @@ export default {
             var series = [];
             var cityData = [['华北', BJData], ['华东', SHData], ['华南', GZData],['西南',CDData],['西北', QHData],['东北', CCData]]
            
-           cityData.forEach(function (item, i) {
+            cityData.forEach(function (item, i) {
                 //console.log(item,i);
                 series.push({
                     name: item[0] + ' Top10',
@@ -495,7 +495,7 @@ export default {
                         calculable: true,
                         show:false,
                         inRange: {
-                            color: ['#ffffff', '#ffc188', '#479fd2', '#fba853', '#48c7c0', '#fa8737', '#4bbdd6', '#ff6f5b']
+                            color: ['#ffffff', '#479fd2', '#39AB37', '#FCDB00', '#48c7c0', '#7FC123', '#4bbdd6', '#ff6f5b']
                             //第一位无效  value  1:华北:北京   2 :西南:重庆    3:华南: 河南    4:东北 :内蒙：  5:华东:华东    6 西北:新疆 
                         }
                     },
