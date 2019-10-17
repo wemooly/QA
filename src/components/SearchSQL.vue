@@ -18,6 +18,17 @@
         <div class="name">{{ item.value }}</div>
       </template>
     </el-autocomplete>
+
+    <el-button type="text" @click="centerDialogVisible = true">点击打开 Dialog</el-button>
+
+    <el-dialog
+      :visible.sync="centerDialogVisible"
+      width="100%"
+      :append-to-body="true"
+      center>
+      <router-view></router-view>
+
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -36,6 +47,7 @@ export default {
   },
   data() {
     return {
+      centerDialogVisible: false,
       state: "", // input中显示的值
       oldArr: [], // 存储前一次的值的数组
       newArr: [], // 存储最新值的数组

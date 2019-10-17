@@ -2,6 +2,15 @@
   <div class="demo">
     <el-button @click="printPdf" >打印</el-button>
 
+    <el-select v-model="value" placeholder="请选择">
+      <el-option
+        v-for="item in printOptions"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value">
+      </el-option>
+    </el-select>
+
     <form id="form1">
       <table border="1" width="300" id="tb01" bgcolor="#CCFFCC" style="border:solid 1px black;border-collapse:collapse"><tr><td width="133" id="mtb001">
         <font face="黑体" color="#FF0000" size="3"><u>&nbsp;《表单一》&nbsp;</u></font></td></tr></table>
@@ -29,13 +38,14 @@
       <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
       <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
     </el-tabs>
-
+      
   </div>
 </template>
 
 <script>
 
   import { getLodop } from './data/LodopFuncs'
+
   let Base64 = require("js-base64").Base64;   //加密以及解密用
   export default {
     name: "demo",
@@ -50,17 +60,19 @@
     methods: {
       // 查询数据
       printPdf() {
+        
         let  LODOP = getLodop();
-        LODOP.PRINT_INIT("订货单");
+        LODOP.PRINT_INIT("打印小票");
         LODOP.SET_PRINT_STYLE("FontSize", 18);
         LODOP.SET_PRINT_STYLE("Bold", 1);
         LODOP.ADD_PRINT_TEXT(50, 231, 260, 39, "打印页面部分内容");
-        LODOP.ADD_PRINT_HTM(88, 200, 350, 600,
+        LODOP.SET_PRINT_PAGESIZE(3,580,20,"CreateCustomPage")
+        LODOP.ADD_PRINT_HTM(30,20,450,600,
           document.getElementById("form1").innerHTML);
         // LODOP.PRINT();
         LODOP.PREVIEW();
-        this.getLodopData();
       },
+
       getLodopData() {
         let LODOP = getLodop();
         let arr = []
@@ -83,19 +95,5 @@
         this.printOptions = arr
       }
     },
-
-    created(){
-       let timer = setInterval(()=>{
-            this.a--;  
-            if (this.a == 0) {
-              // alert(1);
-              clearInterval(timer);
-            }
-        },1000)
-        let  msg = Base64.encode("i love si")
-        // alert(msg)
-        // alert(Base64.decode(msg))
-    }
-    
   }
 </script>

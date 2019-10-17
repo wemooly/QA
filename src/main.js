@@ -9,6 +9,10 @@ Vue.config.productionTip = false
 
 import $ from "jquery"
 
+import Vuetree from 'vue-simple-tree'
+ 
+Vue.use(Vuetree)
+
 import print from 'vue-print-nb'
 Vue.use(print)
 

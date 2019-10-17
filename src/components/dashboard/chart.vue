@@ -1,49 +1,23 @@
 <template>
     <div class="chart-wrap">
-        <div :id="'main'+acceptChartIndex"></div>
+        <div :id="'main'+chartIndex" class="main"></div>
     </div>
-
 </template>
 
 <script>
 import echarts from "echarts"
 export default {
     props: {
-        newHeight: Number,
-        newWidth:  Number, //两种类型都行的用数组表示
-        chartIndex:String
+        chartIndex:Number
     },
     data() {
         return {
-          myChart:'',
-          wrapHeight: '',
-          acceptChartIndex:''
+           myChart:'',
         };
-    },
-    components: {
-
-    },
-    computed: {
-
-    },
-    watch: {
-        newHeight(val){
-            console.log("newHeightnewHeight",val);
-            const main = document.getElementById(`main${this.acceptChartIndex}`)
-            main.style.height = (this.newHeight - 31)+"px"
-            main.style.width = this.newWidth+"px"
-            this.myChart.resize();
-        },
-        chartIndex(val){
-            this.acceptChartIndex = val
-        },
-        newWidth(){
-
-        }
     },
     methods: {
         init(){
-            this.myChart = echarts.init(document.getElementById(`main${this.acceptChartIndex}`));
+            this.myChart = echarts.init(document.getElementById(`main${this.chartIndex}`));
 
                 // 指定图表的配置项和数据
             var option = {
@@ -64,25 +38,24 @@ export default {
                     data: [5, 20, 36, 10, 10, 20]
                 }]
             };
-
             // 使用刚指定的配置项和数据显示图表。
             this.myChart.setOption(option);  
         },
-
+        chartResize(){
+            this.myChart.resize();
+        }
     },
     created() {
 
     },
     mounted() {
         this.init();
-        // let height = 
-        // this.myChart.widht =
     },
 };
 </script>
 
 <style scoped lang="less">
-    #main{
+    .main{
         width: 600px;
         height: 300px;
         // overflow: auto;

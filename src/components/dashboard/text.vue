@@ -1,7 +1,6 @@
 <template>
     <div>
-        <el-input v-model="input" placeholder="请输入内容"></el-input>
-
+        <el-input type="textarea" v-model="input" placeholder="请输入内容"></el-input>
     </div>
 </template>
 
@@ -12,7 +11,7 @@ export default {
     },
     data() {
         return {
-            input:'',   
+            input:'测试专用',   
         };
     },
     components: {
@@ -37,5 +36,12 @@ export default {
 </script>
 
 <style scoped lang="less">
-
+/deep/.el-textarea{
+    width: 100%;
+    height: 100%;
+    el-textarea__inner{
+        width: 100%;
+        height: calc(100% - 31px);
+    }
+}
 </style>

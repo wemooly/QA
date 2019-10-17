@@ -16,7 +16,18 @@ export default new Router({
     },
     {
       path: "/addQuestion",
-      component: () => import("../components/SearchSQL.vue")
+      component: () => import("../components/SearchSQL.vue"),
+      redirect:'/addQuestion/studentInfo',
+      children:[
+        {
+          path:'studentInfo',
+          component:()=> import("./../components/studentInfo.vue")
+        },
+        {
+          path:'searchStudent',
+          component:()=> import("./../components/searchStudent.vue")
+        },
+      ]
     },
     {
       path: "/singleQusetion",
@@ -29,6 +40,10 @@ export default new Router({
     {
       path:"/eleTree",
       component:()=>import("./../components/eleTree")
+    },
+    {
+      path:"/eleTree2",
+      component:()=>import("./../components/eleTree2")
     },
     {
       path:"/html",
@@ -63,6 +78,20 @@ export default new Router({
     {
       path:"/myDashBoard",
       component:()=>import("./../components/dashboard/index.vue")
+    },
+    // studentInfo.vue
+    {
+      path:"/studentInfo",
+      component:()=>import("./../components/studentInfo.vue")
+    },
+    // searchStudent.vue
+    {
+      path:"/searchStudent",
+      component:()=>import("./../components/searchStudent.vue")
+    },
+    {
+      path:"/print2",
+      component:()=>import("./../view/print.vue")
     },
     {
       path:"*",

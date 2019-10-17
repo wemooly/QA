@@ -1,7 +1,5 @@
 <template>
-
-         <iframe id="mainContent"  :src= "src" ></iframe>
-
+    <iframe id="mainContent"  :src= "src" ></iframe>
 </template>
 
 <script>
@@ -11,7 +9,7 @@ export default {
     },
     data() {
         return {
-            src:'https://www.baidu.com'
+            src:'http://10.108.11.46/login'
         };
     },
     components: {

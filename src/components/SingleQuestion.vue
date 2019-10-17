@@ -1,4 +1,5 @@
 <template>
+<div>
   <el-row type="flex" justify="center">
     <el-col :span="20" :offset="2">
       <div>
@@ -15,6 +16,9 @@
       </div>
     </el-col>
   </el-row>
+
+  <iframe style="width:80%;height:1000px;margin:auto;" src="http://localhost:8080/addQuestion/studentInfo" frameborder="0" ></iframe>
+</div>
 </template>
 <script>
 export default {

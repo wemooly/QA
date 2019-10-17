@@ -2,13 +2,14 @@
     <div>
         <div class="layout">
              <el-button type="primary" plain @click="addGridItem">添加节点</el-button>
+             <el-button type="primary" plain @click="editGridItem">编辑dashboard</el-button>
              <el-button type="primary" @click="saveLayout">保存布局</el-button>
             <grid-layout
                 :layout.sync="testLayout"
                 :col-num="12"
                 :row-height="30"
-                :is-draggable="true"
-                :is-resizable="true"
+                :is-draggable="draggableFlag"
+                :is-resizable="resizableFlag"
                 :vertical-compact="true"
                 :is-mirrored="false"
                 :margin="[10, 10]"
@@ -37,20 +38,27 @@
                         </el-dropdown>
                     </div>    
                     <!-- {{item.i}} -->
-                    <component :is="item.compentent" :newHeight ="newHeight"  :newWidth ="newWidth" :chartIndex="index+1"></component>
+                    <component :is="item.compentent" :ref="'componetent'+index" :chartIndex="index*1"></component>
                 </grid-item>
             </grid-layout> 
         </div>
 
         <el-dialog
-            title="提示"
+            title="添加节点的类型"
             :visible.sync="dialogVisible"
-            width="60%"
+            width="40%"
             >
-            <span>这是一段信息</span>
+            <el-select v-model="valueType" placeholder="请选择">
+                <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                </el-option>
+            </el-select>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+                <el-button type="primary" @click="comfirmAddGridItem">确 定</el-button>
             </span>
         </el-dialog>
 
@@ -66,7 +74,7 @@ import MyTable from './table'
 import MyIframe from './iframe'
 
 var initLayout = [
-    {"x":0,"y":0,"w":6,"h":5,"i":"0",compentent:MyChart},
+    {"x":0,"y":0,"w":6,"h":5,"i":"0",compentent:MyText},
     {"x":2,"y":0,"w":6,"h":4,"i":"1",compentent:MyIframe},
     {"x":4,"y":0,"w":6,"h":5,"i":"2",compentent:MyTable},
     {"x":6,"y":0,"w":6,"h":3,"i":"3",compentent:MyChart},
@@ -86,24 +94,52 @@ export default {
             newHeight: 0,
             newWidth: 0,
             chartIndex:'',
+            options:[
+                {label:'文字', value:"01"},
+                {label:'表格', value:"02"},
+                {label:'图表', value:"03"},
+                {label:'web网页', value:"04"},
+            ],
+            valueType:'',  //添加的选择的节点的类型
+            draggableFlag:false,
+            resizableFlag:false,
         };
     },
     components: {
         GridLayout: VueGridLayout.GridLayout,
         GridItem : VueGridLayout.GridItem,
     },
-    computed: {
-
-    },
     watch: {
 
     },
     methods: {
         addGridItem(){
-            this.num++;
+            this.valueType = '';
             this.dialogVisible = true;
             // const item = {"x":0,"y":0,"w":6,"h":5,"i":this.num}
             // this.testLayout.push(item);
+        },
+        comfirmAddGridItem(){
+            let typeCompentent;
+            this.num++;
+            switch (this.valueType) {
+                case "02":
+                    typeCompentent = MyTable
+                    break;
+                case "03":
+                    typeCompentent = MyChart
+                    break;
+                case "04":
+                    typeCompentent = MyIframe
+                    break;
+            }
+            const item = {"x":0,"y":0,"w":6,"h":5,"i":this.num,compentent:typeCompentent}
+            this.testLayout.push(item);
+            this.dialogVisible = false;
+        },
+        editGridItem(){
+            this.draggableFlag = true
+            this.resizableFlag = true
         },
         handleCommand(command,index){
             switch(command){
@@ -133,18 +169,18 @@ export default {
                 message: '保存布局成功!'
             });
             initLayout = this.testLayout;
+            this.draggableFlag = false
+            this.resizableFlag = false
         },
         // resize事件处理
         handlerResize(i, newH, newW, newHPx, newWPx){
-            console.log("RESIZE i=" + i + ", H=" + newH + ", W=" + newW + ", H(px)=" + newHPx + ", W(px)=" + newWPx);
-            console.log(newHPx);
-            this.chartIndex = i,
-            this.newWidth = newWPx;
-            this.newHeight = newHPx;
+            // console.log("RESIZE i=" + i + ", H=" + newH + ", W=" + newW + ", H(px)=" + newHPx + ", W(px)=" + newWPx);
+            // console.log(newHPx,newWPx);
+            const main = document.getElementById(`main${i}`)
+            main.style.height = (newHPx - 31)+"px"
+            main.style.width = newWPx + "px"
+            this.$refs['componetent'+i][0].chartResize();
         }
-    },
-    created() {
-        
     },
     mounted() {
         //模拟异步服务端获取保存之后的位置数据 
@@ -163,6 +199,13 @@ export default {
 </script>
 
 <style scoped lang="less">
+/deep/.el-dialog__body{
+    display: flex;
+    justify-content: center;
+    .el-select{
+        width: 80%;
+    }
+}
 .layout {
         background: #999;
         min-height: calc(100vh - 76px);
