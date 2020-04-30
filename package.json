@@ -19,7 +19,7 @@
     "echarts-china-misc-js": "0.0.1",
     "element-ui": "^2.8.2",
     "file-saver": "^2.0.2",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "js-base64": "^2.5.1",
     "jsoneditor": "^7.0.4",
     "less": "^3.9.0",
