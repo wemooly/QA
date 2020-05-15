@@ -1,13 +1,13 @@
 <template>
     <div>
-        <div class="layout">
+        <div class="layout" id="boardLayout">
              <el-button type="primary" plain @click="addGridItem">添加节点</el-button>
              <el-button type="primary" plain @click="editGridItem">编辑dashboard</el-button>
              <el-button type="primary" @click="saveLayout">保存布局</el-button>
             <grid-layout
                 :layout.sync="testLayout"
                 :col-num="12"
-                :row-height="30"
+                :row-height="100"
                 :is-draggable="draggableFlag"
                 :is-resizable="resizableFlag"
                 :vertical-compact="true"
@@ -25,17 +25,19 @@
                         style="border: 1px solid #fff">
                     <div class="container">
                         <el-dropdown @command="handleCommand($event,index)" trigger="click">
-                        <span class="el-dropdown-link">
-                            操作面板<i class="el-icon-arrow-down el-icon--right"></i>
-                        </span>
-                        <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item command="b">查看</el-dropdown-item>
-                            <el-dropdown-item command="c">编辑</el-dropdown-item>
-                            <el-dropdown-item command="d">分享</el-dropdown-item>
-                            <el-dropdown-item command ="a">删除</el-dropdown-item>
-                            <!-- <el-dropdown-item divided>蚵仔煎</el-dropdown-item> -->
-                        </el-dropdown-menu>
+                            <span class="el-dropdown-link">
+                                操作面板<i class="el-icon-arrow-down el-icon--right"></i>
+                            </span>
+                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item command="b">查看</el-dropdown-item>
+                                <el-dropdown-item command="c">编辑</el-dropdown-item>
+                                <el-dropdown-item command="d">分享</el-dropdown-item>
+                                <el-dropdown-item command ="a">删除</el-dropdown-item>
+                            </el-dropdown-menu>
                         </el-dropdown>
+                        <div class="handerBox">
+                            <i class="el-icon-delete" @click="handlerDelete(index)"></i>
+                        </div>
                     </div>    
                     <!-- {{item.i}} -->
                     <component :is="item.compentent" :ref="'componetent'+index" :chartIndex="index*1"></component>
@@ -74,8 +76,8 @@ import MyTable from './table'
 import MyIframe from './iframe'
 
 var initLayout = [
-    {"x":0,"y":0,"w":6,"h":5,"i":"0",compentent:MyText},
-    {"x":2,"y":0,"w":6,"h":4,"i":"1",compentent:MyIframe},
+    {"x":0,"y":0,"w":6,"h":4,"i":"1",compentent:MyIframe},
+    {"x":2,"y":0,"w":6,"h":5,"i":"0",compentent:MyText},
     {"x":4,"y":0,"w":6,"h":5,"i":"2",compentent:MyTable},
     {"x":6,"y":0,"w":6,"h":3,"i":"3",compentent:MyChart},
 ]
@@ -143,22 +145,7 @@ export default {
         },
         handleCommand(command,index){
             switch(command){
-                case 'a' : this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                        type: 'warning'
-                        }).then(() => {
-                            this.testLayout.splice(index,1)
-                            this.$message({
-                                type: 'success',
-                                message: '删除成功!'
-                            });
-                        }).catch(() => {
-                            this.$message({
-                                type: 'info',
-                                message: '已取消删除'
-                            });          
-                    });
+                case 'a' : this.handlerDelete(index)
                 break;
             }
             
@@ -172,14 +159,32 @@ export default {
             this.draggableFlag = false
             this.resizableFlag = false
         },
+        handlerDelete(index){
+            this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+                }).then(() => {
+                    this.testLayout.splice(index,1)
+                    this.$message({
+                        type: 'success',
+                        message: '删除成功!'
+                    });
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                });          
+            });
+        },
         // resize事件处理
         handlerResize(i, newH, newW, newHPx, newWPx){
             // console.log("RESIZE i=" + i + ", H=" + newH + ", W=" + newW + ", H(px)=" + newHPx + ", W(px)=" + newWPx);
             // console.log(newHPx,newWPx);
             const main = document.getElementById(`main${i}`)
-            main.style.height = (newHPx - 31)+"px"
-            main.style.width = newWPx + "px"
-            this.$refs['componetent'+i][0].chartResize();
+            main && (main.style.height = (newHPx - 31)+"px")
+            main &&  (main.style.width = newWPx + "px")
+            main && this.$refs['componetent'+i][0].chartResize();
         }
     },
     mounted() {
@@ -217,9 +222,16 @@ export default {
     // }
 }
 .container{
-    text-align: center;
+    // text-align: center;
+    padding: 0 15px;
     background-color: #ccc;
     line-height: 30px;
+    .handerBox{
+        float:right;
+        i{
+            cursor: pointer;
+        }
+    }
 }
 
 </style>

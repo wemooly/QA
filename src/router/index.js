@@ -7,7 +7,7 @@ export default new Router({
   routes: [
     {
       path: "/",
-      redirect:'/myDashBoard',
+      redirect:'/markdown',
       component: () => import("../components/ShowQuestion.vue")
     },
     {
@@ -92,6 +92,23 @@ export default new Router({
     {
       path:"/print2",
       component:()=>import("./../view/print.vue")
+    },
+    {
+      path:"/vcrontab",
+      component:()=>import("./../view/vcrontab/index.vue")
+    },
+   
+    {
+      path:"/circle",
+      component:()=>import("./../view/circle.vue")
+    },
+    {
+      path:"/process",
+      component:()=>import("./../view/process.vue")
+    },
+    {
+      path:"/markdown",
+      component:()=>import("./../view/markdown.vue")
     },
     {
       path:"*",

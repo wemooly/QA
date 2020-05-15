@@ -46,8 +46,7 @@
       }
     },
     mounted(){
-      console.log(this.transID,"transIDtransID");
-      
+      console.log("table");
     }
   }
 </script>

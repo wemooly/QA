@@ -9,7 +9,6 @@
       @select="handleSelect"
       :disabled="editFlag"
       @input.native="add"
-      
     >
     <!-- @input.native="textInput"
       @click.native="clickInput"

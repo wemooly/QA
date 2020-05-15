@@ -16,6 +16,10 @@ Vue.use(Vuetree)
 import print from 'vue-print-nb'
 Vue.use(print)
 
+import ModuleLibrary from '@coreui/vue';
+// Install this library
+Vue.use(ModuleLibrary);
+
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI)

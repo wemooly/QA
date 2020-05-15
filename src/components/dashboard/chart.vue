@@ -50,6 +50,7 @@ export default {
     },
     mounted() {
         this.init();
+        console.log("chart");
     },
 };
 </script>
@@ -58,7 +59,7 @@ export default {
     .main{
         width: 600px;
         height: 300px;
-        // overflow: auto;
+
     }
     .chart-wrap{
         width: 100%;

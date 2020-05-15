@@ -2,19 +2,34 @@
   <nav>
     <ul>
       <li>
-        <router-link to="/" exact>问题总览</router-link>
+        <router-link to="/" exact>10499502030602&epsilon;10.0</router-link>
         <router-link to="/addQuestion" exact>添加问题</router-link>
         <router-link to="/singleQusetion" exact>单独问题</router-link>
         <router-link to="/myDashBoard" exact>dashboard</router-link>
-        
+        <el-button @click="reqFullScreen">全屏</el-button>
       </li>
     </ul>
   </nav>
 </template>
 
 <script>
+import screenfull from "screenfull"
+import { log } from 'util';
+
 export default {
-  name: "QHeader"
+  name: "QHeader",
+  methods: {
+    reqFullScreen(){
+      let el = document.getElementById("boardLayout");
+      console.log(el,"el");
+      console.log(screenfull,"screenfull");
+      
+      
+      if (screenfull.enabled) {
+        screenfull.request(el);
+      }
+    }
+  },
 };
 </script>
 

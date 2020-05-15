@@ -16,6 +16,7 @@
 <script>
 import echarts from "echarts"
 import 'echarts/map/js/china' // 引入中国地图数据
+// import 'echarts/map/js/world' // 引入世界地图数据
 import "./../utils/util"
 import mapData from "./data/mapData"
 import {mapMouseOver,mapMouseOut,cancelHigh} from "./data/mapEvent"
@@ -415,7 +416,7 @@ export default {
 
             let option = {
                 baseOption:{
-                    backgroundColor: '#404a59',
+                    // backgroundColor: '#404a59',
                     title : {
                         text: '模拟迁徙',
                         subtext: '数据纯属虚构',
@@ -727,14 +728,17 @@ export default {
 <style  scoped>
     .el-tab-pane{
         width: 100%;
-        height: 300px;
+        height: 800px;
     }
     #main{
         width: 100%;
         height: 100%;
+        background-image: url("./../assets/infoImg/bg-info.jpg");
     }
     #main2{
         width: 100%;
         height: 100%;
+        background-image: url("./../assets/infoImg/bg-info.jpg");
+        background-size: contain;
     }
 </style>

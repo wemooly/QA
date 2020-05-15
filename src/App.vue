@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <QHeader />
+    <QHeader v-if="$route.query.flag=='underfind' || $route.query.flag!='1'"/>
     <!-- <Search :acceptRestaurants="total" :showDefaultValue="value"></Search> -->
     <router-view />
   </div>
@@ -28,9 +28,12 @@ export default {
         { value: "from", address: "form" },
         { value: "avg", address: "avg" }
       ],
-      value: ""
+      value: "",
     };
-  }
+  },
+  created() {
+    
+  },
 };
 </script>
 
